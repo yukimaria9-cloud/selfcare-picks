@@ -43,7 +43,7 @@ export default async function PrivacyPage({
       <h2 className="mt-6 text-lg font-bold">お問い合わせ</h2>
       <p>本ポリシーに関するお問い合わせは、お問い合わせフォームよりご連絡ください。</p>
 
-      <p className="mt-6 text-sm text-neutral-500">制定日:2026年◯月◯日(要更新)</p>
+      <p className="mt-6 text-sm text-neutral-500">制定日:2026年7月26日</p>
     </article>
   );
 }
