@@ -13,11 +13,16 @@ export default function AdMaxUnit({
   width,
   height,
   className = "",
+  // 「オーバーレイ」タイプ等、広告自体が閉じるボタンなどでぴったりのサイズより
+  // はみ出す可能性がある広告枠向け。true にすると内部のoverflow:hiddenをやめ、
+  // スクロールも許可して広告の中身が切れないようにする。
+  allowOverflow = false,
 }: {
   tagUrl: string;
-  width: number;
-  height: number;
+  width: number | string;
+  height: number | string;
   className?: string;
+  allowOverflow?: boolean;
 }) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
@@ -26,11 +31,13 @@ export default function AdMaxUnit({
     if (!doc) return;
     doc.open();
     doc.write(
-      `<!DOCTYPE html><html><head><style>html,body{margin:0;padding:0;overflow:hidden;background:transparent;}</style></head>` +
+      `<!DOCTYPE html><html><head><style>html,body{margin:0;padding:0;${
+        allowOverflow ? "" : "overflow:hidden;"
+      }background:transparent;}</style></head>` +
         `<body><script src="${tagUrl}"><\/script></body></html>`
     );
     doc.close();
-  }, [tagUrl]);
+  }, [tagUrl, allowOverflow]);
 
   return (
     <iframe
@@ -38,7 +45,7 @@ export default function AdMaxUnit({
       title="広告"
       className={className}
       style={{ width, height, border: "none", display: "block" }}
-      scrolling="no"
+      scrolling={allowOverflow ? "auto" : "no"}
     />
   );
 }

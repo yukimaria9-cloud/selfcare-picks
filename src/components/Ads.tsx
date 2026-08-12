@@ -17,12 +17,13 @@ export function AdPcHeader() {
   );
 }
 
-// 広い画面幅のPCのみ、画面右端に固定表示する160x600
-// (本文は max-w-5xl の1カラムでサイドバーが無いため、画面に十分な余白がある
-//  2xl(1536px)以上でのみ表示し、本文と重ならないようにしている)
+// 画面幅に余裕があるPCのみ、画面右端に固定表示する160x600
+// (本文は max-w-5xl の1カラムでサイドバーが無いため、本文と重ならない
+//  xl(1280px)以上でのみ表示している。1280〜1366px程度の幅では数十pxだけ
+//  本文の右端と近接する場合があるが、それより広い画面では余裕をもって収まる)
 export function AdPcSideRail() {
   return (
-    <div className="fixed top-32 right-4 z-30 hidden 2xl:block">
+    <div className="fixed top-32 right-2 z-30 hidden xl:block">
       <AdMaxUnit tagUrl={TAGS.pcSideRail} width={160} height={600} />
     </div>
   );
@@ -38,10 +39,19 @@ export function AdSpBanner() {
 }
 
 // スマホのみ、画面下部に固定表示するオーバーレイ広告
+// 「オーバーレイ」形式は閉じるボタンなどでぴったり320x50より広い領域を
+// 使うことがあるため、ぴったりサイズに切り詰めず(allowOverflow)、
+// 横幅も画面いっぱい・縦も少し余裕を持たせている
 export function AdSpOverlay() {
   return (
-    <div className="fixed inset-x-0 bottom-0 z-40 flex justify-center border-t border-black/10 bg-[color:var(--panel)]/95 py-1 shadow-[0_-4px_12px_-6px_rgba(0,0,0,0.2)] md:hidden">
-      <AdMaxUnit tagUrl={TAGS.spOverlay} width={320} height={50} />
+    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-black/10 bg-[color:var(--panel)]/95 shadow-[0_-4px_12px_-6px_rgba(0,0,0,0.2)] md:hidden">
+      <AdMaxUnit
+        tagUrl={TAGS.spOverlay}
+        width="100%"
+        height={100}
+        allowOverflow
+        className="mx-auto block max-w-[420px]"
+      />
     </div>
   );
 }
