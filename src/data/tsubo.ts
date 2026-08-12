@@ -34,7 +34,7 @@ export type Tsubo = {
 //     △: 手のひら・足の裏のツボ(体重や日常動作で圧がかかり、痛みが出やすいが貼ること自体は可能)
 //     ✕: 髪の毛が生えている部分のツボ(粘着面が浮きやすく、貼ってもすぐ取れる)
 //   パワーテープ
-//     △: なし
+//     △: 顔まわりなど面積が狭いツボ(テープのサイズが大きく、貼ること自体はできるが目立ちやすく貼りづらい)
 //     ✕: 髪の毛が生えている部分のツボ
 //   上記に当てはまらない部位はすべて○(相性が良い)とする。
 export const tsuboList: Tsubo[] = [
@@ -71,9 +71,9 @@ export const tsuboList: Tsubo[] = [
     point: { x: 38, y: 70 },
     zoom: 1.4,
     compatibility: [
-      { productSlug: "enpishin-1", rating: "bad", reason: "髪が生えている部分は粘着面が浮きやすく、貼ってもすぐ取れてしまう" },
-      { productSlug: "enpishin-2", rating: "bad", reason: "同上。髪の生え際や地肌が隠れる場所は避けたほうが貼りやすい" },
-      { productSlug: "power-tape-1", rating: "bad", reason: "髪があると粘着面が肌に密着せずすぐ取れる" },
+      { productSlug: "enpishin-1", rating: "good", reason: "生え際に近いが、うなじの筋肉の上で面がとれるので貼りやすい" },
+      { productSlug: "enpishin-2", rating: "good", reason: "低刺激タイプなので、うなじのこの位置でも違和感なく貼れる" },
+      { productSlug: "power-tape-1", rating: "good", reason: "うなじは面積があるので、テープのサイズでもズレにくく貼りやすい" },
     ],
   },
   {
@@ -245,7 +245,7 @@ export const tsuboList: Tsubo[] = [
     compatibility: [
       { productSlug: "enpishin-1", rating: "good", reason: "肌が薄すぎない部位なので、鍼の刺激をしっかり感じられる" },
       { productSlug: "enpishin-2", rating: "good", reason: "低刺激タイプなので、この部位でも違和感なく貼れる" },
-      { productSlug: "power-tape-1", rating: "good", reason: "平らに貼れる部位なので、ズレにくく続けやすい" },
+      { productSlug: "power-tape-1", rating: "warn", reason: "貼れるが、テープのサイズが大きいため、眉間の狭いスペースには貼りづらい" },
     ],
   },
   {
@@ -263,7 +263,7 @@ export const tsuboList: Tsubo[] = [
     compatibility: [
       { productSlug: "enpishin-1", rating: "good", reason: "肌が薄すぎない部位なので、鍼の刺激をしっかり感じられる" },
       { productSlug: "enpishin-2", rating: "good", reason: "低刺激タイプなので、この部位でも違和感なく貼れる" },
-      { productSlug: "power-tape-1", rating: "good", reason: "平らに貼れる部位なので、ズレにくく続けやすい" },
+      { productSlug: "power-tape-1", rating: "warn", reason: "貼れるが、テープのサイズが大きいため、眉頭のせまいスペースには貼りづらい" },
     ],
   },
   {
@@ -281,7 +281,7 @@ export const tsuboList: Tsubo[] = [
     compatibility: [
       { productSlug: "enpishin-1", rating: "good", reason: "肌が薄すぎない部位なので、鍼の刺激をしっかり感じられる" },
       { productSlug: "enpishin-2", rating: "good", reason: "低刺激タイプなので、この部位でも違和感なく貼れる" },
-      { productSlug: "power-tape-1", rating: "good", reason: "平らに貼れる部位なので、ズレにくく続けやすい" },
+      { productSlug: "power-tape-1", rating: "warn", reason: "貼れるが、テープのサイズが大きいため、目もとの狭いスペースには貼りづらい" },
     ],
   },
   {
@@ -299,7 +299,7 @@ export const tsuboList: Tsubo[] = [
     compatibility: [
       { productSlug: "enpishin-1", rating: "good", reason: "肌が薄すぎない部位なので、鍼の刺激をしっかり感じられる" },
       { productSlug: "enpishin-2", rating: "good", reason: "低刺激タイプなので、この部位でも違和感なく貼れる" },
-      { productSlug: "power-tape-1", rating: "good", reason: "平らに貼れる部位なので、ズレにくく続けやすい" },
+      { productSlug: "power-tape-1", rating: "warn", reason: "貼れるが、テープのサイズが大きいため、頬の狭いスペースには貼りづらい" },
     ],
   },
   {
@@ -673,7 +673,7 @@ export const tsuboList: Tsubo[] = [
     compatibility: [
       { productSlug: "enpishin-1", rating: "good", reason: "肌が薄すぎない部位なので、鍼の刺激をしっかり感じられる" },
       { productSlug: "enpishin-2", rating: "good", reason: "低刺激タイプなので、この部位でも違和感なく貼れる" },
-      { productSlug: "power-tape-1", rating: "good", reason: "平らに貼れる部位なので、ズレにくく続けやすい" },
+      { productSlug: "power-tape-1", rating: "warn", reason: "貼れるが、テープのサイズが大きいため、耳のうしろの狭いスペースには貼りづらい" },
     ],
   },
   {
@@ -707,9 +707,9 @@ export const tsuboList: Tsubo[] = [
     point: { x: 50, y: 8 },
     zoom: 1.5,
     compatibility: [
-      { productSlug: "enpishin-1", rating: "bad", reason: "髪が生えている部分は粘着面が浮きやすく、貼ってもすぐ取れてしまう" },
-      { productSlug: "enpishin-2", rating: "bad", reason: "同上。髪の生え際や地肌が隠れる場所は避けたほうが貼りやすい" },
-      { productSlug: "power-tape-1", rating: "bad", reason: "髪があると粘着面が肌に密着せずすぐ取れる" },
+      { productSlug: "enpishin-1", rating: "good", reason: "生え際ぎりぎりだが、額の地肌の上なので貼りやすい" },
+      { productSlug: "enpishin-2", rating: "good", reason: "低刺激タイプなので、この位置でも違和感なく貼れる" },
+      { productSlug: "power-tape-1", rating: "warn", reason: "貼れるが、テープのサイズが大きいため、額の狭いスペースには貼りづらい" },
     ],
   },
   {
@@ -725,9 +725,9 @@ export const tsuboList: Tsubo[] = [
     point: { x: 80, y: 14 },
     zoom: 1.5,
     compatibility: [
-      { productSlug: "enpishin-1", rating: "bad", reason: "髪が生えている部分は粘着面が浮きやすく、貼ってもすぐ取れてしまう" },
-      { productSlug: "enpishin-2", rating: "bad", reason: "同上。髪の生え際や地肌が隠れる場所は避けたほうが貼りやすい" },
-      { productSlug: "power-tape-1", rating: "bad", reason: "髪があると粘着面が肌に密着せずすぐ取れる" },
+      { productSlug: "enpishin-1", rating: "good", reason: "生え際ぎりぎりだが、額の地肌の上なので貼りやすい" },
+      { productSlug: "enpishin-2", rating: "good", reason: "低刺激タイプなので、この位置でも違和感なく貼れる" },
+      { productSlug: "power-tape-1", rating: "warn", reason: "貼れるが、テープのサイズが大きいため、額の狭いスペースには貼りづらい" },
     ],
   },
   {
@@ -779,9 +779,9 @@ export const tsuboList: Tsubo[] = [
     point: { x: 32, y: 44 },
     zoom: 1.5,
     compatibility: [
-      { productSlug: "enpishin-1", rating: "good", reason: "肌が薄すぎない部位なので、鍼の刺激をしっかり感じられる" },
-      { productSlug: "enpishin-2", rating: "good", reason: "低刺激タイプなので、この部位でも違和感なく貼れる" },
-      { productSlug: "power-tape-1", rating: "good", reason: "平らに貼れる部位なので、ズレにくく続けやすい" },
+      { productSlug: "enpishin-1", rating: "bad", reason: "もみあげの生え際に近く、粘着面が浮きやすく、貼ってもすぐ取れてしまう" },
+      { productSlug: "enpishin-2", rating: "bad", reason: "同上。髪の生え際に近い場所は避けたほうが貼りやすい" },
+      { productSlug: "power-tape-1", rating: "bad", reason: "髪が近いと粘着面が肌に密着せずすぐ取れる" },
     ],
   },
   {

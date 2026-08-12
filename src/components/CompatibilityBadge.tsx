@@ -2,7 +2,7 @@ import type { Rating } from "@/data/tsubo";
 
 const RATING_STYLES: Record<Rating, { mark: string; label: string; className: string }> = {
   good: { mark: "○", label: "相性が良い", className: "bg-[color:var(--good)]" },
-  warn: { mark: "△", label: "貼れるが、痛みが出やすい", className: "bg-[color:var(--warn)]" },
+  warn: { mark: "△", label: "貼れるが、痛みが出やすい・サイズが大きく貼りづらい", className: "bg-[color:var(--warn)]" },
   bad: { mark: "✕", label: "剥がれやすくおすすめしにくい", className: "bg-[color:var(--bad)]" },
 };
 

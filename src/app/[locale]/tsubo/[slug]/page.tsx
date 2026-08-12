@@ -137,7 +137,7 @@ export default async function TsuboDetailPage({
         </h2>
         <div className="flex flex-wrap gap-4 text-xs text-[color:var(--muted)]">
           <span><CompatibilityBadge rating="good" size="sm" /> 相性が良い</span>
-          <span><CompatibilityBadge rating="warn" size="sm" /> 貼れるが、痛みが出やすい</span>
+          <span><CompatibilityBadge rating="warn" size="sm" /> 貼れるが、痛みが出やすい・サイズが大きく貼りづらい</span>
           <span><CompatibilityBadge rating="bad" size="sm" /> 剥がれやすくおすすめしにくい</span>
         </div>
 
