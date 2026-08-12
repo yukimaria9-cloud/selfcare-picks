@@ -94,11 +94,12 @@ export default async function LocaleLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <head>
-        <script
+        {/* 原因切り分けのため一時的に無効化中(下のコメント参照) */}
+        {/* <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4971438424400327"
           crossOrigin="anonymous"
-        ></script>
+        ></script> */}
       </head>
       <body className="min-h-full flex flex-col">
         <Script
@@ -115,14 +116,16 @@ export default async function LocaleLayout({
           `}
         </Script>
         <Header locale={locale as Locale} />
-        <AdPcHeader />
+        {/* removeChildエラーの原因切り分けのため、AdSense自動広告・忍者Admaxとも
+            一時的に全て無効化中。原因が確定次第、問題のある方だけ復活させる */}
+        {/* <AdPcHeader />
         <AdSpBanner />
-        <AdPcSideRail />
+        <AdPcSideRail /> */}
         <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8 pb-16 md:pb-8">
           {children}
         </main>
         <Footer locale={locale as Locale} />
-        <AdMaxLoader />
+        {/* <AdMaxLoader /> */}
       </body>
     </html>
   );
