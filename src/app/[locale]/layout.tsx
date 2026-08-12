@@ -24,6 +24,8 @@ export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
+const SITE_URL = "https://www.selfcare-picks.com";
+
 const METADATA_BY_LOCALE: Record<Locale, Metadata> = {
   ja: {
     title: {
@@ -32,6 +34,20 @@ const METADATA_BY_LOCALE: Record<Locale, Metadata> = {
     },
     description:
       "シャクティマット・円皮鍼・パワーテープの比較と、部位・症状から探せるツボ一覧。通わない、頑張らない、ズボラでも続くセルフケアの参考情報をまとめています。",
+    openGraph: {
+      type: "website",
+      locale: "ja_JP",
+      siteName: "セルフケア図鑑（ツボ×グッズ）",
+      title: "セルフケア図鑑（ツボ×グッズ）",
+      description:
+        "シャクティマット・円皮鍼・パワーテープの比較と、部位・症状から探せるツボ一覧。通わない、頑張らない、ズボラでも続くセルフケアの参考情報をまとめています。",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "セルフケア図鑑（ツボ×グッズ）",
+      description:
+        "シャクティマット・円皮鍼・パワーテープの比較と、部位・症状から探せるツボ一覧。",
+    },
   },
   en: {
     title: {
@@ -52,7 +68,14 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   if (!locales.includes(locale as Locale)) return {};
-  return METADATA_BY_LOCALE[locale as Locale];
+  return {
+    metadataBase: new URL(SITE_URL),
+    ...METADATA_BY_LOCALE[locale as Locale],
+    alternates: {
+      canonical: `/${locale}`,
+      languages: { ja: "/ja", en: "/en" },
+    },
+  };
 }
 
 export default async function LocaleLayout({

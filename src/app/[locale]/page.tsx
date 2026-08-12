@@ -1,7 +1,10 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import JsonLd from "@/components/JsonLd";
 import { categories } from "@/data/products";
 import { locales, type Locale } from "./layout";
+
+const SITE_URL = "https://www.selfcare-picks.com";
 
 export default async function Home({
   params,
@@ -45,6 +48,22 @@ export default async function Home({
 
   return (
     <div className="flex flex-col gap-10">
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "セルフケア図鑑（ツボ×グッズ）",
+          url: `${SITE_URL}/${locale}`,
+          description:
+            "シャクティマット・円皮鍼・パワーテープの比較と、部位・症状から探せるツボ一覧。",
+          inLanguage: "ja",
+          potentialAction: {
+            "@type": "SearchAction",
+            target: `${SITE_URL}/${locale}/tsubo?q={search_term_string}`,
+            "query-input": "required name=search_term_string",
+          },
+        }}
+      />
       <section>
         <span className="inline-block rounded-full bg-[color:var(--accent)] px-4 py-1 text-xs font-bold text-white">
           MY BEST SELF CARE

@@ -4,6 +4,9 @@ import { locales, type Locale } from "../layout";
 
 export const metadata: Metadata = {
   title: "運営者について",
+  description:
+    "セルフケア図鑑（ツボ×グッズ）の運営者について。実際に使ったセルフケアグッズだけを、正直な使用感とともに紹介しています。",
+  alternates: { canonical: "/ja/about" },
 };
 
 export default async function AboutPage({

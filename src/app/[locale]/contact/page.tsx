@@ -4,6 +4,8 @@ import { locales, type Locale } from "../layout";
 
 export const metadata: Metadata = {
   title: "お問い合わせ",
+  description: "セルフケア図鑑（ツボ×グッズ）へのご質問・ご指摘はこちらからお送りください。",
+  alternates: { canonical: "/ja/contact" },
 };
 
 // Googleフォームを作成後、共有 →「<> 埋め込む」で取得した src の URL をここに設定してください。

@@ -5,6 +5,8 @@ import { locales, type Locale } from "../layout";
 
 export const metadata: Metadata = {
   title: "プライバシーポリシー",
+  description: "セルフケア図鑑（ツボ×グッズ）のアクセス解析・広告配信に関するプライバシーポリシーです。",
+  alternates: { canonical: "/ja/privacy" },
 };
 
 export default async function PrivacyPage({

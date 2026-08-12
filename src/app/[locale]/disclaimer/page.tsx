@@ -3,7 +3,10 @@ import type { Metadata } from "next";
 import { locales, type Locale } from "../layout";
 
 export const metadata: Metadata = {
-  title: "免責事項",
+  title: "免責事項・広告表記",
+  description:
+    "セルフケア図鑑（ツボ×グッズ）のアフィリエイトプログラム・使用感レビューについての免責事項です。",
+  alternates: { canonical: "/ja/disclaimer" },
 };
 
 export default async function DisclaimerPage({

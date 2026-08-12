@@ -1,14 +1,20 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import TsuboSearchClient from "@/components/TsuboSearchClient";
+import JsonLd from "@/components/JsonLd";
 import { tsuboList } from "@/data/tsubo";
 import { findBodyPart, findSymptom } from "@/data/tsuboCategories";
 import { findProduct } from "@/data/products";
 import { locales, type Locale } from "../layout";
 
+const SITE_URL = "https://www.selfcare-picks.com";
+
 export const metadata: Metadata = {
   title: "ツボ一覧・検索",
   description: "体の部位・症状から、円皮鍼やパワーテープと合わせて使いたいツボを探せます。",
+  // 絞り込み条件のクエリパラメータ違いを別ページとして重複インデックスさせないよう、
+  // 常にクエリ無しの基本URLを正規URLとして指定する
+  alternates: { canonical: "/ja/tsubo" },
 };
 
 // ツボ詳細ページに載っている単語なら何でも検索できるように、名前・読みだけでなく位置の説明文・
@@ -64,6 +70,16 @@ export default async function TsuboIndexPage({
 
   return (
     <div className="flex flex-col gap-8">
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "セルフケア図鑑", item: `${SITE_URL}/${locale}` },
+            { "@type": "ListItem", position: 2, name: "ツボ一覧・検索", item: `${SITE_URL}/${locale}/tsubo` },
+          ],
+        }}
+      />
       <header>
         <span className="inline-block rounded-full bg-[color:var(--accent-2)] px-4 py-1 text-xs font-bold text-white">
           TSUBO SEARCH

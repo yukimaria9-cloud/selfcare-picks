@@ -4,10 +4,13 @@ import type { Metadata } from "next";
 import TsuboLocationPhoto from "@/components/TsuboLocationPhoto";
 import CompatibilityBadge from "@/components/CompatibilityBadge";
 import AffiliateButton from "@/components/AffiliateButton";
+import JsonLd from "@/components/JsonLd";
 import { tsuboList, findTsubo } from "@/data/tsubo";
 import { findBodyPart, findSymptom } from "@/data/tsuboCategories";
 import { findProduct, findCategoryForProduct } from "@/data/products";
 import { locales, type Locale } from "../../layout";
+
+const SITE_URL = "https://www.selfcare-picks.com";
 
 export function generateStaticParams() {
   return tsuboList.map((t) => ({ slug: t.slug }));
@@ -24,6 +27,7 @@ export async function generateMetadata({
   return {
     title: `${tsubo.name}（${tsubo.reading}）`,
     description: tsubo.description,
+    alternates: { canonical: `/ja/tsubo/${slug}` },
   };
 }
 
@@ -57,6 +61,17 @@ export default async function TsuboDetailPage({
 
   return (
     <article className="flex flex-col gap-8">
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "セルフケア図鑑", item: `${SITE_URL}/${locale}` },
+            { "@type": "ListItem", position: 2, name: "ツボ一覧・検索", item: `${SITE_URL}/${locale}/tsubo` },
+            { "@type": "ListItem", position: 3, name: tsubo.name, item: `${SITE_URL}/${locale}/tsubo/${tsubo.slug}` },
+          ],
+        }}
+      />
       <p className="text-xs text-[color:var(--muted)]">
         <Link href={`/${locale}/tsubo`} className="underline underline-offset-2 hover:no-underline">
           ツボ一覧・検索
