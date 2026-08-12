@@ -95,17 +95,15 @@ export function AdSpBanner() {
 }
 
 // 共通ローダー t.js の読み込みだけを行う。
-// (オーバーレイ広告は専用divを必要とせず、window.admaxadsへのpushだけで
-//  ローダー自身が画面下部に固定表示のUIを作るため、AdSlotは使わずここでpushする)
+//
+// 【SPオーバーレイは一時的に無効化中】
+// オーバーレイ広告は仕組み上、自分の入れ物用divを持たずページ本体を直接操作しようと
+// することが多く、既存のReact管理下にあるDOMノードを書き換えて
+// 「removeChild: The node to be removed is not a child of this node」を発生させ、
+// サイト全体の操作(ツボ検索のタグ絞り込みなど)が効かなくなる不具合が実際に起きた。
+// 他の3つ(PC728x90 / PC160x600 / SP320x50)はAdSlotでReactの管理から
+// 完全に切り離し済みで問題ないが、オーバーレイのみ同様の切り分けができておらず、
+// 原因切り分けのため一旦pushを止めている。
 export function AdMaxLoader() {
-  return (
-    <>
-      <Script id="admax-overlay-queue" strategy="afterInteractive">
-        {`window.admaxads = window.admaxads || [];\nwindow.admaxads.push(${JSON.stringify(
-          { admax_id: IDS.spOverlay, type: "overlay" }
-        )});`}
-      </Script>
-      <Script src="https://adm.shinobi.jp/st/t.js" strategy="afterInteractive" />
-    </>
-  );
+  return <Script src="https://adm.shinobi.jp/st/t.js" strategy="afterInteractive" />;
 }
