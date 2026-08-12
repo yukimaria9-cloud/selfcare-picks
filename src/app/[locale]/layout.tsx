@@ -116,17 +116,16 @@ export default async function LocaleLayout({
           `}
         </Script>
         <Header locale={locale as Locale} />
-        {/* 忍者Admax(3枠版でも)がReactのDOM管理と衝突し、ツボ検索のタグ操作が
-            効かなくなる不具合を確認したため、原因が解決するまで全面的に無効化中。
-            AdSense自動広告も同様に無効化中(上のhead参照) */}
-        {/* <AdPcHeader />
+        {/* 切り分け中: PC用2枠(728x90ヘッダー・160x600サイド)は無効化のまま、
+            SPバナー320x50だけ復活させて検証中。AdSense自動広告も無効化中(上のhead参照) */}
+        {/* <AdPcHeader /> */}
         <AdSpBanner />
-        <AdPcSideRail /> */}
+        {/* <AdPcSideRail /> */}
         <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8 pb-16 md:pb-8">
           {children}
         </main>
         <Footer locale={locale as Locale} />
-        {/* <AdMaxLoader /> */}
+        <AdMaxLoader />
       </body>
     </html>
   );
