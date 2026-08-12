@@ -8,7 +8,8 @@ export const metadata: Metadata = {
 
 // Googleフォームを作成後、共有 →「<> 埋め込む」で取得した src の URL をここに設定してください。
 // 空のままだと、フォームの代わりに準備中メッセージが表示されます。
-const GOOGLE_FORM_EMBED_URL = "";
+const GOOGLE_FORM_EMBED_URL =
+  "https://docs.google.com/forms/d/e/1FAIpQLSc5NhdQvG7Npqy-LBPzWB9X9Hw5Q7krOVcejyf3ZMaMBp6eHQ/viewform?embedded=true";
 
 export default async function ContactPage({
   params,
