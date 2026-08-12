@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import type { Metadata } from "next";
 import { locales, type Locale } from "../layout";
 
@@ -41,7 +42,13 @@ export default async function PrivacyPage({
       </p>
 
       <h2 className="mt-6 text-lg font-bold">お問い合わせ</h2>
-      <p>本ポリシーに関するお問い合わせは、お問い合わせフォームよりご連絡ください。</p>
+      <p>
+        本ポリシーに関するお問い合わせは、
+        <Link href={`/${locale}/contact`} className="text-blue-600 hover:underline">
+          お問い合わせフォーム
+        </Link>
+        よりご連絡ください。
+      </p>
 
       <p className="mt-6 text-sm text-neutral-500">制定日:2026年7月26日</p>
     </article>

@@ -26,19 +26,19 @@ export function generateStaticParams() {
 const METADATA_BY_LOCALE: Record<Locale, Metadata> = {
   ja: {
     title: {
-      default: "セルフケアグッズ比較【シャクティマット・円皮鍼・パワーテープ】",
-      template: "%s | セルフケアグッズ比較",
+      default: "セルフケア図鑑（ツボ×グッズ）【シャクティマット・円皮鍼・パワーテープ・ツボ】",
+      template: "%s | セルフケア図鑑",
     },
     description:
-      "シャクティマット・円皮鍼・パワーテープを比較。疲れやコリのセルフケアグッズ選びの参考情報をまとめています。",
+      "シャクティマット・円皮鍼・パワーテープの比較と、部位・症状から探せるツボ一覧。通わない、頑張らない、ズボラでも続くセルフケアの参考情報をまとめています。",
   },
   en: {
     title: {
-      default: "Self-Care Goods Comparison",
-      template: "%s | Self-Care Goods Comparison",
+      default: "SelfCare Zukan (Acupoints × Goods)",
+      template: "%s | SelfCare Zukan",
     },
     description:
-      "English version coming soon. Comparison of self-care goods such as shakti mats, acupressure patches, and power tape.",
+      "English version coming soon. Comparison of self-care goods such as shakti mats, acupressure patches, and power tape, plus an acupoint (tsubo) directory.",
     // 英語版はプレースホルダーのみのため、翻訳が入るまで検索エンジンにインデックスさせない
     robots: { index: false, follow: false },
   },

@@ -8,6 +8,10 @@
   --accent-3: #ffc94d;
   --panel: #ffffff;
   --muted: #8b6b7c;
+  --line: #f0dce3;
+  --good: #2f9e5c;
+  --warn: #c8871a;
+  --bad: #d6455a;
 }
 
 @theme inline {
@@ -26,6 +30,10 @@
     --accent-3: #ffd166;
     --panel: #2e1b2a;
     --muted: #c9a7ba;
+    --line: #4a2d40;
+    --good: #4fbf7f;
+    --warn: #e0a94a;
+    --bad: #ef6b76;
   }
 }
 
