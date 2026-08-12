@@ -5,7 +5,7 @@ import Script from "next/script";
 import "../globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { AdPcHeader, AdPcSideRail, AdSpBanner, AdSpOverlay } from "@/components/Ads";
+import { AdPcHeader, AdPcSideRail, AdSpBanner, AdMaxLoader } from "@/components/Ads";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -99,7 +99,7 @@ export default async function LocaleLayout({
           {children}
         </main>
         <Footer locale={locale as Locale} />
-        <AdSpOverlay />
+        <AdMaxLoader />
       </body>
     </html>
   );

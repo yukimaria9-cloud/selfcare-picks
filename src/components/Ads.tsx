@@ -1,30 +1,40 @@
-import AdMaxUnit from "./AdMaxUnit";
+import Script from "next/script";
 
-// 忍者Admaxで発行した4つの広告枠タグ(スラッグ部分のみ)。
-const TAGS = {
-  pcHeader: "https://adm.shinobi.jp/s/5ee2b209693a0be090e36e48c079ddac", // PC 728x90
-  pcSideRail: "https://adm.shinobi.jp/s/0321c00c76185c9a6323516c53567341", // PC 160x600(右サイド)
-  spBanner: "https://adm.shinobi.jp/s/74dbbf68a1dacc14ecd92f44423faf64", // SP 320x50
-  spOverlay: "https://adm.shinobi.jp/s/4c116e6b082568972469fa7f55bd78b6", // SPオーバーレイ 320x50
-};
+// 忍者Admaxで発行した4つの広告枠のID(非同期タグ形式: data-admax-id / admax_id)。
+// 非同期タグは document.write を使わない安全な方式(window.admaxadsにpushし、
+// 共通ローダー https://adm.shinobi.jp/st/t.js が読み取って各divに広告を差し込む)
+// なので、Reactのページにも直接置ける。
+const IDS = {
+  pcHeader: "5ee2b209693a0be090e36e48c079ddac", // PC 728x90 / type: banner
+  pcSideRail: "0321c00c76185c9a6323516c53567341", // PC 160x600(右サイド) / type: action
+  spBanner: "74dbbf68a1dacc14ecd92f44423faf64", // SP 320x50 / type: banner
+  spOverlay: "4c116e6b082568972469fa7f55bd78b6", // SPオーバーレイ 320x50 / type: overlay
+} as const;
 
 // PCのみ、ヘッダー直下に表示する728x90バナー
 export function AdPcHeader() {
   return (
     <div className="mx-auto hidden w-fit py-2 md:flex md:justify-center">
-      <AdMaxUnit tagUrl={TAGS.pcHeader} width={728} height={90} />
+      <div
+        className="admax-ads"
+        data-admax-id={IDS.pcHeader}
+        style={{ display: "inline-block", width: 728, height: 90 }}
+      />
     </div>
   );
 }
 
 // 画面幅に余裕があるPCのみ、画面右端に固定表示する160x600
 // (本文は max-w-5xl の1カラムでサイドバーが無いため、本文と重ならない
-//  lg(1024px)以上でのみ表示している。1024〜1150px程度の幅では本文の右端と
-//  近接・一部重なる場合があるが、非表示になるよりは実用上優先させている)
+//  lg(1024px)以上でのみ表示している)
 export function AdPcSideRail() {
   return (
     <div className="fixed top-32 right-2 z-30 hidden lg:block">
-      <AdMaxUnit tagUrl={TAGS.pcSideRail} width={160} height={600} />
+      <div
+        className="admax-ads"
+        data-admax-id={IDS.pcSideRail}
+        style={{ display: "inline-block", width: 160, height: 600 }}
+      />
     </div>
   );
 }
@@ -33,25 +43,37 @@ export function AdPcSideRail() {
 export function AdSpBanner() {
   return (
     <div className="mx-auto flex w-fit justify-center py-2 md:hidden">
-      <AdMaxUnit tagUrl={TAGS.spBanner} width={320} height={50} />
+      <div
+        className="admax-ads"
+        data-admax-id={IDS.spBanner}
+        style={{ display: "inline-block", width: 320, height: 50 }}
+      />
     </div>
   );
 }
 
-// スマホのみ、画面下部に固定表示するオーバーレイ広告
-// 「オーバーレイ」形式は閉じるボタンなどでぴったり320x50より広い領域を
-// 使うことがあるため、ぴったりサイズに切り詰めず(allowOverflow)、
-// 横幅も画面いっぱい・縦も少し余裕を持たせている
-export function AdSpOverlay() {
+// 4つ分の window.admaxads.push(...) と、共通ローダー t.js の読み込みをまとめて行う。
+// (オーバーレイ広告はページ内に置く専用divを必要とせず、ローダーが自分で
+//  画面下部に固定表示のUIを作るため、対応するAd*コンポーネントは無い)
+export function AdMaxLoader() {
+  const units = [
+    { admax_id: IDS.pcHeader, type: "banner" },
+    { admax_id: IDS.pcSideRail, type: "action" },
+    { admax_id: IDS.spBanner, type: "banner" },
+    { admax_id: IDS.spOverlay, type: "overlay" },
+  ];
+
   return (
-    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-black/10 bg-[color:var(--panel)]/95 shadow-[0_-4px_12px_-6px_rgba(0,0,0,0.2)] md:hidden">
-      <AdMaxUnit
-        tagUrl={TAGS.spOverlay}
-        width="100%"
-        height={100}
-        allowOverflow
-        className="mx-auto block max-w-[420px]"
+    <>
+      <Script id="admax-queue" strategy="afterInteractive">
+        {`window.admaxads = window.admaxads || [];\n${units
+          .map((u) => `window.admaxads.push(${JSON.stringify(u)});`)
+          .join("\n")}`}
+      </Script>
+      <Script
+        src="https://adm.shinobi.jp/st/t.js"
+        strategy="afterInteractive"
       />
-    </div>
+    </>
   );
 }
