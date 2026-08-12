@@ -116,16 +116,16 @@ export default async function LocaleLayout({
           `}
         </Script>
         <Header locale={locale as Locale} />
-        {/* removeChildエラーの原因切り分けのため、AdSense自動広告・忍者Admaxとも
-            一時的に全て無効化中。原因が確定次第、問題のある方だけ復活させる */}
-        {/* <AdPcHeader />
+        {/* removeChildエラーの切り分け中: AdSense自動広告は引き続き無効化(上のhead参照)。
+            忍者Admax(Reactから切り離し済みの3枠、オーバーレイは除く)のみ復活させて検証中 */}
+        <AdPcHeader />
         <AdSpBanner />
-        <AdPcSideRail /> */}
+        <AdPcSideRail />
         <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8 pb-16 md:pb-8">
           {children}
         </main>
         <Footer locale={locale as Locale} />
-        {/* <AdMaxLoader /> */}
+        <AdMaxLoader />
       </body>
     </html>
   );
