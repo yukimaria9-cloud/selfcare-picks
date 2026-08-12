@@ -19,11 +19,11 @@ export function AdPcHeader() {
 
 // 画面幅に余裕があるPCのみ、画面右端に固定表示する160x600
 // (本文は max-w-5xl の1カラムでサイドバーが無いため、本文と重ならない
-//  xl(1280px)以上でのみ表示している。1280〜1366px程度の幅では数十pxだけ
-//  本文の右端と近接する場合があるが、それより広い画面では余裕をもって収まる)
+//  lg(1024px)以上でのみ表示している。1024〜1150px程度の幅では本文の右端と
+//  近接・一部重なる場合があるが、非表示になるよりは実用上優先させている)
 export function AdPcSideRail() {
   return (
-    <div className="fixed top-32 right-2 z-30 hidden xl:block">
+    <div className="fixed top-32 right-2 z-30 hidden lg:block">
       <AdMaxUnit tagUrl={TAGS.pcSideRail} width={160} height={600} />
     </div>
   );
