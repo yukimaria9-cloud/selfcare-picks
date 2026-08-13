@@ -1,7 +1,9 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
+import JsonLd from "@/components/JsonLd";
 import { locales, type Locale } from "../layout";
+import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "プライバシーポリシー",
@@ -28,6 +30,16 @@ export default async function PrivacyPage({
 
   return (
     <article className="flex flex-col gap-2 rounded-lg border border-black/10 bg-white p-4 text-neutral-800 sm:p-6">
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "セルフケア図鑑", item: `${SITE_URL}/${locale}` },
+            { "@type": "ListItem", position: 2, name: "プライバシーポリシー", item: `${SITE_URL}/${locale}/privacy` },
+          ],
+        }}
+      />
       <h1 className="text-2xl font-bold">プライバシーポリシー</h1>
 
       <h2 className="mt-6 text-lg font-bold">アクセス解析ツールについて</h2>

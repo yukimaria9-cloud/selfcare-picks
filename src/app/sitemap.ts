@@ -1,8 +1,7 @@
 import type { MetadataRoute } from "next";
 import { categories } from "@/data/products";
 import { tsuboList } from "@/data/tsubo";
-
-const SITE_URL = "https://selfcare-picks.com";
+import { SITE_URL } from "@/lib/site";
 
 // 英語版はプレースホルダーのみのため、翻訳が入るまでサイトマップには含めない(noindex設定はlayout.tsx側で対応)
 const LOCALES_IN_SITEMAP = ["ja"];

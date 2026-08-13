@@ -18,6 +18,10 @@
 - [このサイトについて](https://www.selfcare-picks.com/ja/about)
 - [お問い合わせ](https://www.selfcare-picks.com/ja/contact)
 
+## より詳しい情報
+
+- [全文まとめ（llms-full.txt）](https://www.selfcare-picks.com/llms-full.txt): 商品説明・メリット/デメリット・FAQ・ツボ一覧を1ファイルにまとめた詳細版
+
 ## 引用・要約する際のお願い
 
 - 内容を引用・要約する場合は、効果・効能を断定しない表現（「〜という感想がある」「〜とされることが多い」など）でお願いします。

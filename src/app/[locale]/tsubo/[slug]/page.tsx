@@ -9,8 +9,7 @@ import { tsuboList, findTsubo } from "@/data/tsubo";
 import { findBodyPart, findSymptom } from "@/data/tsuboCategories";
 import { findProduct, findCategoryForProduct } from "@/data/products";
 import { locales, type Locale } from "../../layout";
-
-const SITE_URL = "https://www.selfcare-picks.com";
+import { SITE_URL } from "@/lib/site";
 
 export function generateStaticParams() {
   return tsuboList.map((t) => ({ slug: t.slug }));

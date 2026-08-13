@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import JsonLd from "@/components/JsonLd";
 import { locales, type Locale } from "../layout";
+import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "お問い合わせ",
@@ -32,6 +34,16 @@ export default async function ContactPage({
 
   return (
     <article className="flex flex-col gap-4">
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "セルフケア図鑑", item: `${SITE_URL}/${locale}` },
+            { "@type": "ListItem", position: 2, name: "お問い合わせ", item: `${SITE_URL}/${locale}/contact` },
+          ],
+        }}
+      />
       <h1 className="text-2xl font-extrabold tracking-tight text-[color:var(--accent)] sm:text-3xl">
         お問い合わせ
       </h1>

@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function ProductImage({
   imageUrl,
   name,
@@ -17,13 +19,18 @@ export default function ProductImage({
     );
   }
 
-  // 画像の縦横比によってトリミングされないよう、全体表示(contain)で縮小する
-  // eslint-disable-next-line @next/next/no-img-element
+  // 画像の縦横比によってトリミングされないよう、全体表示(contain)で縮小する。
+  // next/imageのfillで表示することで、レスポンシブなsrcset・遅延読み込み・
+  // 明示的なアスペクト比確保(CLS対策)を自動で得られる。
   return (
-    <img
-      src={imageUrl}
-      alt={name}
-      className={`h-40 w-full rounded-2xl bg-[color:var(--panel)] object-contain ${className}`}
-    />
+    <div className={`relative h-40 w-full rounded-2xl bg-[color:var(--panel)] ${className}`}>
+      <Image
+        src={imageUrl}
+        alt={name}
+        fill
+        sizes="(min-width: 640px) 240px, 50vw"
+        className="object-contain"
+      />
+    </div>
   );
 }

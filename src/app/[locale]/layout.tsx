@@ -5,7 +5,9 @@ import Script from "next/script";
 import "../globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import JsonLd from "@/components/JsonLd";
 import { AdPcHeader, AdPcSideRail, AdSpBanner, AdMaxLoader } from "@/components/Ads";
+import { SITE_URL, SITE_NAME, SITE_DESCRIPTION } from "@/lib/site";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,27 +26,23 @@ export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
-const SITE_URL = "https://www.selfcare-picks.com";
-
 const METADATA_BY_LOCALE: Record<Locale, Metadata> = {
   ja: {
     title: {
       default: "セルフケア図鑑（ツボ×グッズ）【シャクティマット・円皮鍼・パワーテープ・ツボ】",
       template: "%s | セルフケア図鑑",
     },
-    description:
-      "シャクティマット・円皮鍼・パワーテープの比較と、部位・症状から探せるツボ一覧。通わない、頑張らない、ズボラでも続くセルフケアの参考情報をまとめています。",
+    description: SITE_DESCRIPTION,
     openGraph: {
       type: "website",
       locale: "ja_JP",
-      siteName: "セルフケア図鑑（ツボ×グッズ）",
-      title: "セルフケア図鑑（ツボ×グッズ）",
-      description:
-        "シャクティマット・円皮鍼・パワーテープの比較と、部位・症状から探せるツボ一覧。通わない、頑張らない、ズボラでも続くセルフケアの参考情報をまとめています。",
+      siteName: SITE_NAME,
+      title: SITE_NAME,
+      description: SITE_DESCRIPTION,
     },
     twitter: {
       card: "summary_large_image",
-      title: "セルフケア図鑑（ツボ×グッズ）",
+      title: SITE_NAME,
       description:
         "シャクティマット・円皮鍼・パワーテープの比較と、部位・症状から探せるツボ一覧。",
     },
@@ -74,6 +72,14 @@ export async function generateMetadata({
     alternates: {
       canonical: `/${locale}`,
       languages: { ja: "/ja", en: "/en" },
+    },
+    // Search Console等の所有権確認用。Vercelの環境変数に値を設定すると
+    // <meta name="google-site-verification" content="..."> が出力される(未設定時は何も出力されない)。
+    verification: {
+      google: process.env.GOOGLE_SITE_VERIFICATION,
+      other: process.env.BING_SITE_VERIFICATION
+        ? { "msvalidate.01": process.env.BING_SITE_VERIFICATION }
+        : undefined,
     },
   };
 }
@@ -115,6 +121,19 @@ export default async function LocaleLayout({
             gtag('config', 'G-N7KPW5J1N0');
           `}
         </Script>
+        {locale === "ja" && (
+          // サイト全体を表すOrganization構造化データ。個々のページのFAQPage/BreadcrumbList等と
+          // 組み合わせて、検索エンジン・生成AIの両方にサイトの運営主体を明示する。
+          <JsonLd
+            data={{
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: SITE_NAME,
+              url: `${SITE_URL}/ja`,
+              logo: `${SITE_URL}/apple-icon`,
+            }}
+          />
+        )}
         <Header locale={locale as Locale} />
         {/* 切り分け中: PC用2枠(728x90ヘッダー・160x600サイド)は無効化のまま、
             SPバナー320x50だけ復活させて検証中。AdSense自動広告も無効化中(上のhead参照) */}

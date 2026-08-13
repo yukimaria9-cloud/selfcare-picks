@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import JsonLd from "@/components/JsonLd";
 import { locales, type Locale } from "../layout";
+import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "運営者について",
@@ -28,6 +30,16 @@ export default async function AboutPage({
 
   return (
     <article className="flex flex-col gap-4">
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "セルフケア図鑑", item: `${SITE_URL}/${locale}` },
+            { "@type": "ListItem", position: 2, name: "運営者について", item: `${SITE_URL}/${locale}/about` },
+          ],
+        }}
+      />
       <h1 className="text-2xl font-extrabold tracking-tight text-[color:var(--accent)] sm:text-3xl">
         運営者について
       </h1>

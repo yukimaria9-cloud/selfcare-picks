@@ -6,8 +6,7 @@ import JsonLd from "@/components/JsonLd";
 import Faq from "@/components/Faq";
 import { categories, findCategory } from "@/data/products";
 import { locales, type Locale } from "../../layout";
-
-const SITE_URL = "https://www.selfcare-picks.com";
+import { SITE_URL } from "@/lib/site";
 
 export function generateStaticParams() {
   return categories.map((category) => ({ slug: category.slug }));
@@ -68,6 +67,28 @@ export default async function ProductCategoryPage({
           ],
         }}
       />
+      {category.products.length > 1 && (
+        // 比較表に載っている商品をItemList+Productとして構造化。価格・レビュー点数は
+        // 商品ごとに揺れがあり正確性を保証できないため、offers/aggregateRatingはあえて含めない。
+        <JsonLd
+          data={{
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            name: `${category.title}の比較`,
+            itemListElement: category.products.map((product, index) => ({
+              "@type": "ListItem",
+              position: index + 1,
+              item: {
+                "@type": "Product",
+                name: product.name,
+                description: product.description,
+                image: product.imageUrl ? `${SITE_URL}${product.imageUrl}` : undefined,
+                url: `${SITE_URL}/${locale}/products/${category.slug}#${product.slug}`,
+              },
+            })),
+          }}
+        />
+      )}
       <header>
         <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
           {category.title}

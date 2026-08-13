@@ -7,8 +7,7 @@ import { tsuboList } from "@/data/tsubo";
 import { findBodyPart, findSymptom, SYMPTOM_SYNONYMS, BODY_PART_SYNONYMS } from "@/data/tsuboCategories";
 import { findProduct } from "@/data/products";
 import { locales, type Locale } from "../layout";
-
-const SITE_URL = "https://www.selfcare-picks.com";
+import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "ツボ一覧・検索",

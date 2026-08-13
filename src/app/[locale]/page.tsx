@@ -4,8 +4,7 @@ import JsonLd from "@/components/JsonLd";
 import Faq from "@/components/Faq";
 import { categories } from "@/data/products";
 import { locales, type Locale } from "./layout";
-
-const SITE_URL = "https://www.selfcare-picks.com";
+import { SITE_URL } from "@/lib/site";
 
 const HOME_FAQ = [
   {

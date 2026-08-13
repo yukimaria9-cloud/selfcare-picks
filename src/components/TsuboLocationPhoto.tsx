@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 // ツボのだいたいの位置を、部位ごとのクローズアップ画像に赤い点を重ねて示す。
 // 点はCSSで画像の上に絶対配置しているだけなので、画像を差し替えても
 // 座標(x/y)はそのまま使い回せる。zoomを上げると、その点を中心にさらに拡大表示する。
@@ -80,12 +82,13 @@ export default function TsuboLocationPhoto({
         className="absolute inset-0"
         style={{ transform: `scale(${zoom})`, transformOrigin: `${point.x}% ${point.y}%` }}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <Image
           src={BASE_IMAGES[view]}
           alt=""
           aria-hidden="true"
-          className="absolute inset-0 h-full w-full object-contain"
+          fill
+          sizes="224px"
+          className="object-contain"
         />
         <span
           className="absolute h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-red-600 ring-2 ring-white"
