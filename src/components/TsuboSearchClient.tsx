@@ -13,6 +13,17 @@ const PRODUCT_FILTERS = [
   { id: "power-tape-1", label: "パワーテープ" },
 ];
 
+// 検索文字列のゆれを吸収する正規化。
+//   ・NFKC: 全角英数字/記号と半角を統一（"ﾂﾎﾞ" "ツボ" のような全角半角カナも統一）
+//   ・toLowerCase: 英字の大文字小文字を無視
+//   ・カタカナ→ひらがな: ツボの読み仮名はひらがな登録なので、カタカナで入力しても拾えるようにする
+function normalizeForSearch(s: string): string {
+  return s
+    .normalize("NFKC")
+    .toLowerCase()
+    .replace(/[ァ-ヶ]/g, (ch) => String.fromCharCode(ch.charCodeAt(0) - 0x60));
+}
+
 function parseIds(value: string | null): Set<string> {
   if (!value) return new Set();
   return new Set(value.split(",").filter(Boolean));
@@ -173,19 +184,32 @@ export default function TsuboSearchClient({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedParts, selectedSymptoms, query, selectedProduct]);
 
+  // 検索対象のインデックスは正規化した形であらかじめ持っておく(入力のたびに正規化し直さない)
+  const normalizedIndex = useMemo(() => {
+    const out: Record<string, string> = {};
+    for (const slug in searchIndex) out[slug] = normalizeForSearch(searchIndex[slug]);
+    return out;
+  }, [searchIndex]);
+
+  // スペース区切りで複数キーワードのAND検索ができるようにする(例:「目 疲れ」「頭痛 こめかみ」)
+  const queryTerms = useMemo(
+    () => normalizeForSearch(query).split(/[\s　]+/).filter(Boolean),
+    [query]
+  );
+
   const results = useMemo(() => {
-    const q = query.trim();
     return tsuboList.filter((t) => {
       const partOk = selectedParts.size === 0 || selectedParts.has(t.bodyPart);
       const symptomOk =
         selectedSymptoms.size === 0 || t.symptoms.some((s) => selectedSymptoms.has(s));
-      const queryOk = !q || (searchIndex[t.slug] ?? "").includes(q);
+      const corpus = normalizedIndex[t.slug] ?? "";
+      const queryOk = queryTerms.length === 0 || queryTerms.every((term) => corpus.includes(term));
       const productOk =
         !selectedProduct ||
         t.compatibility.some((c) => c.productSlug === selectedProduct && c.rating === "good");
       return partOk && symptomOk && queryOk && productOk;
     });
-  }, [selectedParts, selectedSymptoms, query, selectedProduct, searchIndex]);
+  }, [selectedParts, selectedSymptoms, queryTerms, selectedProduct, normalizedIndex]);
 
   const hasFilter =
     selectedParts.size > 0 ||
