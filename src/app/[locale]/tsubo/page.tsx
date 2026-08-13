@@ -2,8 +2,9 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import TsuboSearchClient from "@/components/TsuboSearchClient";
 import JsonLd from "@/components/JsonLd";
+import Faq from "@/components/Faq";
 import { tsuboList } from "@/data/tsubo";
-import { findBodyPart, findSymptom } from "@/data/tsuboCategories";
+import { findBodyPart, findSymptom, SYMPTOM_SYNONYMS, BODY_PART_SYNONYMS } from "@/data/tsuboCategories";
 import { findProduct } from "@/data/products";
 import { locales, type Locale } from "../layout";
 
@@ -24,7 +25,11 @@ function buildSearchIndex(): Record<string, string> {
   return Object.fromEntries(
     tsuboList.map((t) => {
       const partLabel = findBodyPart(t.bodyPart)?.label ?? "";
+      const partSynonyms = (BODY_PART_SYNONYMS[t.bodyPart] ?? []).join(" ");
       const symptomLabels = t.symptoms.map((s) => findSymptom(s)?.label ?? "").join(" ");
+      // カテゴリー名("肩こり"など)だけでなく、「肩が重い」「頭が痛い」のような
+      // 日常的な言い回しでも検索でヒットするように同義語も検索対象に含める
+      const symptomSynonyms = t.symptoms.flatMap((s) => SYMPTOM_SYNONYMS[s] ?? []).join(" ");
       const compatText = t.compatibility
         .map((c) => `${findProduct(c.productSlug)?.name ?? ""} ${c.reason}`)
         .join(" ");
@@ -34,7 +39,9 @@ function buildSearchIndex(): Record<string, string> {
         t.locationText,
         t.description,
         partLabel,
+        partSynonyms,
         symptomLabels,
+        symptomSynonyms,
         compatText,
       ].join(" ");
       return [t.slug, corpus];
@@ -105,6 +112,23 @@ export default async function TsuboIndexPage({
       <p className="text-xs text-[color:var(--muted)]">
         掲載しているツボと相性の目安はサンプルです。体質や症状によって感じ方は異なるため、参考程度にご覧ください。
       </p>
+
+      <Faq
+        items={[
+          {
+            q: "気になる症状に近いツボが複数見つかった場合はどうすればいいですか？",
+            a: "まずは気になるツボを軽く押してみて、心地よく感じる、または少し重だるく感じるツボから試してみるのがおすすめです。無理に強く押しすぎないようにしてください。",
+          },
+          {
+            q: "円皮鍼・パワーテープはどのツボにも貼れますか？",
+            a: "髪が生えている部分は粘着面が浮きやすく貼りづらいため、各ツボページの「相性」の目安を確認してから使うのがおすすめです。手のひらや足の裏など圧がかかりやすい部位は、円皮鍼だと歩行時や動作時に痛みを感じやすい場合があります。",
+          },
+          {
+            q: "ツボの位置は自分で正確に見つけられますか？",
+            a: "各ツボページに「だいたいの位置」の目安と写真を載せています。正確な位置は体格や体質によって多少前後するため、押して心地よく感じる、または少し重だるく感じる場所を目安に探すのがおすすめです。",
+          },
+        ]}
+      />
     </div>
   );
 }

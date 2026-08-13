@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import ComparisonTable from "@/components/ComparisonTable";
 import ProductSection from "@/components/ProductSection";
 import JsonLd from "@/components/JsonLd";
+import Faq from "@/components/Faq";
 import { categories, findCategory } from "@/data/products";
 import { locales, type Locale } from "../../layout";
 
@@ -90,6 +91,8 @@ export default async function ProductCategoryPage({
           <ProductSection key={product.slug} product={product} />
         ))}
       </section>
+
+      {category.faq && <Faq items={category.faq} />}
     </article>
   );
 }

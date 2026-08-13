@@ -1,10 +1,30 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import JsonLd from "@/components/JsonLd";
+import Faq from "@/components/Faq";
 import { categories } from "@/data/products";
 import { locales, type Locale } from "./layout";
 
 const SITE_URL = "https://www.selfcare-picks.com";
+
+const HOME_FAQ = [
+  {
+    q: "「セルフケア図鑑（ツボ×グッズ）」はどんなサイトですか？",
+    a: "円皮鍼・パワーテープ・シャクティマットなど、貼ったり寝転がったりするだけで続けられるセルフケアグッズの比較と、部位・症状から探せるツボ一覧をまとめたサイトです。通院せず自宅で気軽に試せるセルフケアの参考情報を、実際に使った本音の感想とあわせて紹介しています。",
+  },
+  {
+    q: "円皮鍼とパワーテープはどう違いますか？",
+    a: "円皮鍼は米粒大の丸いシールの中心に小さな突起がついたタイプで、ツボをピンポイントに刺激します。パワーテープは突起のない伸縮性のテープで、貼った部位を面でやさしく刺激します。詳しい比較は「円皮鍼・パワーテープ」の比較ページにまとめています。",
+  },
+  {
+    q: "使いたいツボはどうやって探せますか？",
+    a: "「ツボ一覧・検索」ページで、体の部位（頭・肩・腰など）や気になる症状（肩こり・頭痛・冷え性など）からツボを絞り込んで探せます。ツボ名やキーワードでのフリーワード検索にも対応しています。",
+  },
+  {
+    q: "紹介している効果は保証されていますか？",
+    a: "掲載している情報は筆者個人の使用感や一般的な知識に基づく参考情報であり、効果・効能を保証するものではありません。感じ方には個人差があるため、体質や症状に合わない場合は使用を中止し、異常を感じた場合は医師にご相談ください。",
+  },
+];
 
 export default async function Home({
   params,
@@ -104,6 +124,8 @@ export default async function Home({
           </div>
         </div>
       </section>
+
+      <Faq items={HOME_FAQ} />
 
       <p className="text-xs text-[color:var(--muted)]">
         掲載内容は記事作成時点の情報のため、購入前に必ず各販売ページで最新の価格・在庫状況をご確認ください。
