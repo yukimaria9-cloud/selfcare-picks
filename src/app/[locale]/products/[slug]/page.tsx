@@ -68,8 +68,12 @@ export default async function ProductCategoryPage({
         }}
       />
       {category.products.length > 1 && (
-        // 比較表に載っている商品をItemList+Productとして構造化。価格・レビュー点数は
-        // 商品ごとに揺れがあり正確性を保証できないため、offers/aggregateRatingはあえて含めない。
+        // 比較表に載っている商品をItemListとして構造化。
+        // 価格追跡やレビュー機能が無く、offers/review/aggregateRatingを正確な値で
+        // 用意できないため、あえて"@type": "Product"は名乗らない
+        // (Productを名乗るとGoogleはこれらの指定を必須とし、無いと構造化データが
+        // 無効として警告される。実データが無いのに数字をでっち上げるよりは、
+        // Product化を諦めて汎用的なThingとして載せるほうが安全)。
         <JsonLd
           data={{
             "@context": "https://schema.org",
@@ -79,7 +83,7 @@ export default async function ProductCategoryPage({
               "@type": "ListItem",
               position: index + 1,
               item: {
-                "@type": "Product",
+                "@type": "Thing",
                 name: product.name,
                 description: product.description,
                 image: product.imageUrl ? `${SITE_URL}${product.imageUrl}` : undefined,
